@@ -17,6 +17,22 @@ import java.io.IOException;
 
 public class MainActivity extends ActionBarActivity {
     private MediaPlayer player;
+    private Words words;
+    private int curWordPos = 0;
+
+    public MainActivity() {
+        words = new Words();
+        words.add(new Word("爱", "ai.mp3"));
+        words.add(new Word("秋", "qiu.mp3"));
+        words.add(new Word("去", "qu.mp3"));
+        words.add(new Word("全", "quan.mp3"));
+        words.add(new Word("让", "rang.mp3"));
+        words.add(new Word("热", "re.mp3"));
+        words.add(new Word("人", "ren.mp3"));
+        words.add(new Word("日", "ri.mp3"));
+        words.add(new Word("入", "ru.mp3"));
+        words.add(new Word("三", "san.mp3"));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +49,7 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
-        TextView tvWord = (TextView)findViewById(R.id.tvWord);
+        final TextView tvWord = (TextView)findViewById(R.id.tvWord);
         tvWord.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -45,16 +61,25 @@ public class MainActivity extends ActionBarActivity {
         btnContinue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ++ curWordPos;
+                if (curWordPos >= words.count())
+                    curWordPos = 0;
+                
+                tvWord.setText(words.get(curWordPos).getText());
             }
         });
+
+        // init
+        tvWord.setText(words.get(curWordPos).getText());
     }
 
     private void play() {
+        String wordSoundPath = words.get(curWordPos).getSoundPath();
+
         try {
             player = new MediaPlayer();
 
-            AssetFileDescriptor afd = this.getAssets().openFd("ai.mp3");
+            AssetFileDescriptor afd = this.getAssets().openFd(wordSoundPath);
             player.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
             afd.close();
 
