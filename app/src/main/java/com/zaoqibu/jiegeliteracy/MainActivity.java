@@ -27,7 +27,7 @@ public class MainActivity extends ActionBarActivity {
         words.add(new Word("去", "qu.mp3"));
         words.add(new Word("全", "quan.mp3"));
         words.add(new Word("让", "rang.mp3"));
-        words.add(new Word("热", "re.mp3"));
+        words.add(new Word("八", "ba.mp3"));
         words.add(new Word("人", "ren.mp3"));
         words.add(new Word("日", "ri.mp3"));
         words.add(new Word("入", "ru.mp3"));
@@ -64,7 +64,7 @@ public class MainActivity extends ActionBarActivity {
                 ++ curWordPos;
                 if (curWordPos >= words.count())
                     curWordPos = 0;
-                
+
                 tvWord.setText(words.get(curWordPos).getText());
             }
         });
